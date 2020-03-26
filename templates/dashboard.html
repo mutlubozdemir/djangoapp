@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+
+{% block body %}
+
+    <h3>Kontrol Paneli</h3>
+    <hr>
+    <p>Hoşgeldin, <small>{{request.user.username}}</small></p>
+    <hr>
+    <a class="btn btn-danger" href="/Projects/addProject">Proje Ekle</a>
+    <br>
+    <br>
+
+    <table class="table">
+  <thead>
+    <tr>
+        <th scope="col">Proje id</th>
+        <th scope="col">Proje Sahibi</th>
+        <th scope="col">Proje Adı</th>
+        <th scope="col">Proje Tarihi</th>
+        <th scope="col">Güncelle</th>
+        <th scope="col">Sil</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for projects in projects %}
+      <tr>
+      <th scope="row">{{projects.id}}</th>
+          <th scope="row">{{projects.project_user}}</th>
+          <td><a href="/Projects/project/{{projects.id}}">{{projects.project_name}}</a></td>
+          <td>{{projects.project_created_date}}</td>
+          <td><a href="/Projects/update/{{projects.id}}" class="btn btn-danger">Güncelle</a></td>
+          <td><a href="/Projects/delete/{{projects.id}}" class="btn btn-danger">Sil</a></td>
+      </tr>  
+  {% endfor %}
+  
+  </tbody>
+</table>
+
+{% endblock body %}
+    

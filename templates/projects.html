@@ -1,0 +1,84 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h3> Projeler </h3>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <form>
+                {% csrf_token %} 
+                <input type="text" name = "keyword" class="input-sm" maxlength="64" placeholder="Ara...">
+                <button type="submit" class="btn btn-danger">Ara</button>
+            </form>
+    </div>
+</div>
+
+{% if projects  %}
+
+    {% for project in projects %}
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+     <div class="col-md-6 offset-md-3">
+
+            <!-- Title -->
+           <a href="{% url 'Projects:detail' project.id %}"> <h1 class="mt-4">{{project.project_name}}</h1></a>
+
+            <!-- Author -->
+            <p class="lead">
+          
+            <a href="#">{{project.project_user}}</a>
+            tarafından yayınlandı
+            </p>
+
+            <hr>
+
+            <!-- Date/Time -->
+            <p>{{project.project_created_date}}</p>
+
+            <hr>
+            {% if project.project_image  %}
+           <a href="project/{{project.id}}"> <img class="img-fluid rounded" src="{{project.project_image.url}}" alt=""></a>
+            {% endif %}
+
+        
+    
+            <hr>
+
+            <!-- Post Content -->
+            <p class="lead">{{project.project_content|safe|truncatewords:5}}</p>
+
+               <a style ="float : right;" href="project/{{project.id}}" class ="btn btn-danger">Devamını Oku</a>
+            <hr>
+
+       
+
+        </div>
+    <!-- /.row -->
+
+    </div>
+    
+    {% endfor %}
+
+{% else %}
+<br>
+<div class="row">
+
+      <!-- Post Content Column -->
+    <div class="col-md-6 offset-md-3 alert alert-danger">
+
+            Şuan Sayfada Proje Bulunmamaktadır.
+    </div>
+</div>
+{% endif %}
+
+
+{% endblock body %}
